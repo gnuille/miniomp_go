@@ -1,0 +1,1 @@
+# miniomp_go
