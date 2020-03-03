@@ -1,5 +1,7 @@
 package miniomp
 
+import "runtime"
+
 type Thread struct {
 	tid int
 	tasks chan Task
@@ -36,6 +38,11 @@ func CreatePool(nt int) *ThreadPool {
 }
 
 func (t *Thread) Work() {
+
+	if miniomp_bind {
+		runtime.LockOSThread()
+	}
+
 	for true {
 		task := <-t.tasks
 		task.f(task.params)

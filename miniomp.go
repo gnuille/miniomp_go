@@ -12,6 +12,7 @@ var miniomp_wg sync.WaitGroup
 var miniomp_nt int
 var miniomp_pool *ThreadPool
 var miniomp_taskqueue chan Task
+var miniomp_bind bool
 var err error
 
 func Init(main func() ) {
@@ -25,6 +26,15 @@ func Init(main func() ) {
 	}
 
 	log.Print("Number of threads is ", miniomp_nt)
+
+	if bind := os.Getenv("OMP_PROC_BIND"); bind == "true" {
+		log.Print("Binding enabled")
+		miniomp_bind=true
+		runtime.LockOSThread()
+	}else{
+		miniomp_bind=false
+	}
+
 
 	miniomp_pool = CreatePool(miniomp_nt)
 	miniomp_taskqueue = CreateTaskqueue()
