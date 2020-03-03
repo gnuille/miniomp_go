@@ -29,8 +29,11 @@ And the arguments that the task will use have to be declared with the following 
 arguments := []interface{}{ 42, "YAY"}
 ```
 
-## Extrae support
+## Extrae support (experimental)
 Use `make extrae` to run using extrae. To run your own program modify `share/run_extrae.sh` to run your own code!
+You will need your own extrae build. You can get yours at [tools.bsc.es](tools.bsc.es).
+
+Right now it supports these events.
 
 | Extrae event code | Description     |
 |-------------------|-----------------|
