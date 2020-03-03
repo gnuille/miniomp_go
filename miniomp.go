@@ -29,6 +29,8 @@ func Init(main func() ) {
 	miniomp_pool = CreatePool(miniomp_nt)
 	miniomp_taskqueue = CreateTaskqueue()
 
+	runtime.GOMAXPROCS(miniomp_nt)
+
 	for _, t := range miniomp_pool.pool {
 		t.SetTasks(miniomp_taskqueue)
 		go t.Work()
