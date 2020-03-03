@@ -5,6 +5,30 @@ OpenMP like runtime but in go.
 * Support for primitive taskloop construct
 * Support for taskwait construct
 
+## How do I use this package?
+This package uses C preprocessing for conditional compiling features. Right now you can produce to types of builds. A vanila one and an extrae one (go to extrae section for more info).
+
+For running de vanila one you have to download the repo inside the `$GOPATH/src/github.com/teleportex` (see `go env`) and then issue `make install` command for compiling and installing it.
+
+```bash
+mkdir -p $GOPATH/src/github.com/teleportex/
+git clone https://github.com/teleportex/miniomp_go.git $GOPATH/src/github.com/teleportex/
+cd $GOPATH/src/github.com/teleportex/
+make install
+```
+Then you shall be able to import it and initialise the runtime like this:
+```go
+import "github.com/teleportex/miniomp"
+
+func master() {
+   //run tasks
+   //do carzy stuff
+}
+
+func main(){
+  miniomp.Init(master)
+}
+```
 ## How do I run a task?
 
 You have to encapsulate your task in a function, in the example named function, and your arguments in an variable, in the example arguments.
