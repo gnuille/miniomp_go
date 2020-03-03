@@ -1,5 +1,14 @@
 package miniomp
 
+#if EXTRAE_ON
+/* 
+#cgo CFLAGS: -g -Wall -Iextrae_build/include
+#cgo LDFLAGS: -Lextrae_build/lib -lpttrace
+#include <extrae.h>
+*/
+import "C"
+#endif
+
 import "runtime"
 
 type Thread struct {
@@ -45,7 +54,13 @@ func (t *Thread) Work() {
 
 	for true {
 		task := <-t.tasks
+#if EXTRAE_ON
+		C.Extrae_event(8000001, 1)
+#endif
 		task.f(task.params)
 		miniomp_wg.Add(-1)
+#if EXTRAE_ON
+		C.Extrae_event(8000001, 0)
+#endif
 	}
 }

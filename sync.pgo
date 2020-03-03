@@ -1,0 +1,29 @@
+package miniomp
+
+#if EXTRAE_ON
+/* 
+#cgo CFLAGS: -g -Wall -Iextrae_build/include
+#cgo LDFLAGS: -Lextrae_build/lib -lpttrace
+#include <extrae.h>
+*/
+import "C"
+#endif
+
+func TaskWait(){
+#if EXTRAE_ON
+	C.Extrae_event(8000002, 1)
+#endif
+	for true {
+		select {
+		case task := <-miniomp_taskqueue:
+			task.f(task.params)
+			miniomp_wg.Add(-1)
+		default:
+			miniomp_wg.Wait()
+			return
+		}
+	}
+#if EXTRAE_ON
+	C.Extrae_event(8000002,0)
+#endif
+}

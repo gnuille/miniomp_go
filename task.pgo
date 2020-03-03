@@ -1,5 +1,14 @@
 package miniomp
 
+#if EXTRAE_ON
+/* 
+#cgo CFLAGS: -g -Wall -Iextrae_build/include
+#cgo LDFLAGS: -Lextrae_build/lib -lpttrace
+#include <extrae.h>
+*/
+import "C"
+#endif
+
 type Fn func([]interface{}) interface{}
 type LoopFn func(int, []interface{})
 
@@ -17,11 +26,17 @@ func CreateTaskqueue() chan Task {
 }
 
 func NewTask(f Fn, params []interface{}){
+#if EXTRAE_ON
+	C.Extrae_event(8000000,1)
+#endif
 	miniomp_wg.Add(1)
 	miniomp_taskqueue  <-  Task {
 		f: f,
 		params: params,
 	}
+#if EXTRAE_ON
+	C.Extrae_event(8000000,0)
+#endif
 }
 
 func task4TaskLoop(args []interface{}) interface{}{

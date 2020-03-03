@@ -16,6 +16,7 @@ var miniomp_bind bool
 var err error
 
 func Init(main func() ) {
+
 	var nt_st string
 	if nt_st = os.Getenv("OMP_NUM_THREADS"); nt_st == ""{
 		miniomp_nt = runtime.NumCPU()
@@ -49,5 +50,3 @@ func Init(main func() ) {
 	main()
 	TaskWait()
 }
-
-
