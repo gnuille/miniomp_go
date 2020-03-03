@@ -1,3 +1,4 @@
+
 package main
 
 import "miniomp"
@@ -19,6 +20,7 @@ func master_func(){
 		miniomp.NewTask(calc, []interface{}{ a[i], b[i] })
 		miniomp.TaskWait()
 	}
+	//the output should be serialized vs task.go example
 }
 
 func main() {
