@@ -11,13 +11,14 @@ func calc(args []interface{}) interface{} {
 }
 
 func master_func(){
-	a := []int{ 1,2,3,4,5,6,78,9,9,9,99,9,9,9,9,9,9,9}
-	b := []int{ 1,2,3,4,5,6,78,9,9,9,99,9,9,9,9,9,9,9}
+
+	a := []int{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 }
+	b := []int{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 }
 
 	for i,_ := range a {
 		miniomp.NewTask(calc, []interface{}{ a[i], b[i] })
+		miniomp.TaskWait()
 	}
-	fmt.Println("Number of tasks ", len(a))
 }
 
 func main() {
