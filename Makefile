@@ -11,6 +11,11 @@ install: $(psources)
 clean:
 	rm -f *.go
 
+distclean:
+	rm -rf set-0 TRACE.mpits
+	rm -rf *.prv *.pcf *.row
+	$(MAKE) clean
+
 taskloop:
 	$(MAKE) install
 	export OMP_NUM_THREADS=8

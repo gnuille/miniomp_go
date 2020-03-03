@@ -11,12 +11,18 @@ import "C"
 
 func TaskWait(){
 #if EXTRAE_ON
-	C.Extrae_event(8000002, 1)
+	C.Extrae_event(EVENT_SYNC_TASKWAIT, 1)
 #endif
 	for true {
 		select {
 		case task := <-miniomp_taskqueue:
+#if EXTRAE_ON
+			C.Extrae_event(EVENT_TASK_EXECUTION, 1)
+#endif
 			task.f(task.params)
+#if EXTRAE_ON
+			C.Extrae_event(EVENT_TASK_EXECUTION, 0)
+#endif
 			miniomp_wg.Add(-1)
 		default:
 			miniomp_wg.Wait()
@@ -24,6 +30,6 @@ func TaskWait(){
 		}
 	}
 #if EXTRAE_ON
-	C.Extrae_event(8000002,0)
+	C.Extrae_event(EVENT_SYNC_TASKWAIT,0)
 #endif
 }
