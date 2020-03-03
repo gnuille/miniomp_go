@@ -1,5 +1,5 @@
-#if EXTRAE_ON
 package miniomp
+#if EXTRAE_ON
 
 import "C"
 
