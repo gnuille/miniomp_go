@@ -8,3 +8,12 @@ func IntSliceToInterface( a []int ) []interface{} {
 	}
 	return interfaceSlice
 }
+
+func IntSliceIntSliceToInterface( a [][]int ) []interface{} {
+
+	var interfaceSlice []interface{} = make([]interface{}, len(a))
+	for i, d := range a {
+		interfaceSlice[i] = IntSliceToInterface(d)
+	}
+	return interfaceSlice
+}

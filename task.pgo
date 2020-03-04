@@ -54,7 +54,7 @@ func task4TaskLoop(args []interface{}) interface{}{
 
 func TaskLoop(f LoopFn, iterations int, loopFnArgs []interface{}){
 
-	var BS int = (iterations/miniomp_nt)/2
+	var BS int = (iterations/miniomp_nt)/2+1
 	for i:=0; i < iterations; i += BS {
 		fin :=  i+BS
 		if  fin >= iterations {
