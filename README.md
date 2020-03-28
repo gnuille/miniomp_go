@@ -53,7 +53,7 @@ And the arguments that the task will use have to be declared with the following 
 arguments := []interface{}{ 42, "YAY"}
 ```
 
-## Extrae support (experimental)
+## Extrae support
 Use `make extrae` to run using extrae. To run your own program modify `share/run_extrae.sh` to run your own code!
 You will need your own extrae build. You can get yours at [tools.bsc.es](tools.bsc.es).
 
@@ -64,6 +64,8 @@ Right now it supports these events.
 | 8000000           | Task submission |
 | 8000001           | Task execution  |
 | 8000002           | Taskwait        |
+
+Note that the go runtime affects vastly the executions as it is in charge of creating the OS threads and managing them. For example in my machine i have tried hard to execute using 8 threads and just 8 but it always creates 10, altough it uses 8 for executing :D
 
 ## Todo
 * Expand the runtime
