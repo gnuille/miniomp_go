@@ -64,3 +64,7 @@ Right now it supports these events.
 | 8000000           | Task submission |
 | 8000001           | Task execution  |
 | 8000002           | Taskwait        |
+
+## Todo
+* Expand the runtime
+* Add a compiler in order to add calls to the library with pragmas so it is user friendly
