@@ -1,48 +1,41 @@
 package main
 
 import "miniomp"
-import "fmt"
+//import "fmt"
 import "math/rand"
-
-
-var count int64
 
 func calcIt( i int, data []interface{} ){
 
-	a  := data[0].([]interface{})[i].([]interface{})
-	b  := data[1].([]interface{})[i].([]interface{})
-
-	var res int = 0
-	for it,_ := range a {
-		res += a[it].(int) * b[it].(int)
+	a  := data[0].([]interface{})[i].(int)
+	b  := data[1].([]interface{})[i].(int)
+	res := 0
+	for it := 0; it<200; it++ {
+		for it2 := 0; it2 < it*2*2; it2++ {
+			res += it*it2
+			res -= it/(it2+1)
+			res = res*3
+			res -= it2/(it+1)
+			res = res/a
+			res = res*b
+			for it3 := 0; it3 <  it2+it; it3++ {
+				res--
+			}
+		}
 	}
-
-	fmt.Println(res)
-}
-
-func randomArray(len int) []int {
-    a := make([]int, len)
-    for i := 0; i <= len-1; i++ {
-        a[i] = rand.Intn(len)
-    }
-    return a
-}
-
-func randomArrayOfArray(len int) [][]int {
-	a := make([][]int, len)
-	for i := 0; i < len; i++ {
-		a[i] = randomArray(len)
-	}
-	return a
 }
 
 func master_func(){
+	const SIZE int = 1000
 
+	a := []int{}
+	b := []int{}
 
-	A := randomArrayOfArray(10000)
-	B := randomArrayOfArray(10000)
+	for i := 0; i <  SIZE; i++ {
+		a = append(a, rand.Int()+1)
+		b = append(b, rand.Int()+1)
+	}
 
-	miniomp.TaskLoop(calcIt, len(A), []interface{} { miniomp.IntSliceIntSliceToInterface(A), miniomp.IntSliceIntSliceToInterface(B) } )
+	miniomp.TaskLoop(calcIt, len(a), []interface{} { miniomp.IntSliceToInterface(a), miniomp.IntSliceToInterface(b)} )
 
 }
 
